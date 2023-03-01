@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "*.rufo": "ruby",
+        "*.json": "jsonc",
+        "future": "cpp",
+        "system_error": "cpp",
+        "xlocale": "cpp"
+    }
+}
