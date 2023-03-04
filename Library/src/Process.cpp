@@ -76,36 +76,27 @@ ErrorCode Process::StartProcess(const std::wstring cmdline)
 
 bool Process::IsAlive()
 {
-    if (!m_IsAlive)
-        return false;
-
-    DWORD completionCode;
-    ULONG_PTR completionKey;
-    LPOVERLAPPED overlapped;
-
-    if (!GetQueuedCompletionStatus(
-        m_CompletionPort,
-        &completionCode,
-        &completionKey,
-        &overlapped,
-        0
-    ))
+    while (true)
     {
-        if (overlapped == NULL)
-            return true;
+        DWORD completionCode;
+        ULONG_PTR completionKey;
+        LPOVERLAPPED overlapped;
 
-        m_IsAlive = false;
-        return false;
+        if (!GetQueuedCompletionStatus(
+            m_CompletionPort,
+            &completionCode,
+            &completionKey,
+            &overlapped,
+            0
+        ))
+            break;
+
+        if (completionKey == CompletionKey &&
+            completionCode == JOB_OBJECT_MSG_ACTIVE_PROCESS_ZERO)
+            m_IsAlive = false;
     }
 
-    if (completionKey == CompletionKey && 
-        completionCode == JOB_OBJECT_MSG_ACTIVE_PROCESS_ZERO)
-    {
-        m_IsAlive = false;
-        return false;
-    }
-
-    return true;
+    return m_IsAlive;
 }
 
 void Process::Kill()
