@@ -13,6 +13,7 @@ class Process:
             working_directory,
             c.byref(self._handle))
 
+    @property
     def is_alive(self) -> bool:
         if self._handle is None:
             return False
