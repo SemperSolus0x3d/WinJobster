@@ -3,7 +3,11 @@
 #include "Defines.h"
 #include "ErrorCode.h"
 
-WINJOBSTER_WRAPPER(ErrorCode, StartProcess)(const wchar_t* cmdline, void** handle);
+WINJOBSTER_WRAPPER(ErrorCode, StartProcess)(
+    const wchar_t* cmdline,
+    const wchar_t* workingDir,
+    void** handle
+);
 
 WINJOBSTER_WRAPPER(bool, IsAlive)(void* handle);
 

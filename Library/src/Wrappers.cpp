@@ -1,11 +1,20 @@
 ﻿#include "Wrappers.h"
 #include "Process.h"
 
-WINJOBSTER_WRAPPER(ErrorCode, StartProcess)(const wchar_t* cmdline, void** handle)
+WINJOBSTER_WRAPPER(ErrorCode, StartProcess)(
+    const wchar_t* cmdline,
+    const wchar_t* workingDir,
+    void** handle
+)
 {
     auto* info = new Process();
 
-    auto errCode = info->StartProcess(cmdline);
+    std::wstring workingDirStr;
+
+    if (workingDir != NULL)
+        workingDirStr = workingDir;
+
+    auto errCode = info->StartProcess(cmdline, workingDirStr);
 
     if (errCode != ErrorCode::Success)
     {

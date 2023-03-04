@@ -4,6 +4,7 @@
         "*.json": "jsonc",
         "future": "cpp",
         "system_error": "cpp",
-        "xlocale": "cpp"
+        "xlocale": "cpp",
+        "xstring": "cpp"
     }
 }

@@ -12,7 +12,9 @@ class WinJobsterLoader:
         lib.StartProcess.restype = c.c_uint32
         lib.StartProcess.errcheck = WinJobsterLoader._errcheck
         lib.StartProcess.argtypes = [
-            c.c_wchar_p, c.POINTER(c.c_void_p)
+            c.c_wchar_p,
+            c.c_wchar_p,
+            c.POINTER(c.c_void_p)
         ]
 
         lib.IsAlive.restype = c.c_bool

@@ -6,7 +6,7 @@ int main()
     std::wstring cmdline = L"notepad.exe";
 
     void* handle;
-    auto errCode = StartProcess(cmdline.c_str(), &handle);
+    auto errCode = StartProcess(cmdline.c_str(), NULL, &handle);
 
     if (errCode != ErrorCode::Success)
     {

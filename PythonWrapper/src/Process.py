@@ -4,9 +4,12 @@ from WinJobsterLoader import WinJobsterLoader
 class Process:
     _library = WinJobsterLoader().load()
 
-    def __init__(self, cmdline: str):
+    def __init__(self, cmdline: str, working_directory: str | None = None):
         self._handle = c.c_void_p(None)
-        self._library.StartProcess(cmdline, c.byref(self._handle))
+        self._library.StartProcess(
+            cmdline,
+            working_directory,
+            c.byref(self._handle))
 
     def is_alive(self) -> bool:
         return self._library.IsAlive(self._handle)

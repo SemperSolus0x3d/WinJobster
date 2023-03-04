@@ -27,9 +27,13 @@ Process::~Process()
     SafeCloseHandle(m_CompletionPort);
 }
 
-ErrorCode Process::StartProcess(const std::wstring cmdline)
+ErrorCode Process::StartProcess(
+    const std::wstring cmdline,
+    const std::wstring workingDir
+)
 {
     m_Cmdline = cmdline;
+    m_WorkingDir = workingDir;
 
     m_Job = CreateJobObjectW(NULL, NULL);
 
@@ -61,7 +65,7 @@ ErrorCode Process::StartProcess(const std::wstring cmdline)
         TRUE,
         CREATE_SUSPENDED,
         NULL,
-        NULL,
+        m_WorkingDir == L"" ? NULL : m_WorkingDir.c_str(),
         &m_StartupInfo,
         &m_ProcessInfo
     ))
